@@ -1,0 +1,15 @@
+# Ignorar módulos de Node dentro de 01-static
+01-static/node_modules/
+01-static/npm-debug.log
+01-static/yarn-error.log
+
+# Ignorar archivos generados por React y Vite dentro de 01-static
+01-static/dist/
+01-static/build/
+01-static/.cache/
+01-static/.vite/
+
+# Ignorar carpetas específicas dentro de la carpeta backend
+backend/processed/
+backend/output/
+backend/uploads/
