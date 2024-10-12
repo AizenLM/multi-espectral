@@ -55,9 +55,35 @@ nav div li a:hover {
   margin: auto;
   margin-top: 7%;
   width: 60%;
-  background-color: beige;
+  background-color: rgba(15, 22, 33, 0.745);
   padding: 15px;
   border-radius: 10px;
+  color: white;
+}
+.panel-content{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  justify-items: center;
+  text-align: center;
+  padding: 20px;
+}
+.panel-content input{
+  width:80%;
+}
+.panel-content button{
+
+  margin: auto;
+  width: 50%;
+  padding: 10px;
+  cursor: pointer;
+  border-radius: 10px;
+  border: none;
+  background-color: aliceblue;
+  color: black;
+  font-weight: 700;
+  margin-top: 10px;
+
 }
 .spectral-image {
   display: flex;
@@ -152,3 +178,58 @@ section:nth-child(2) .section-content {
   width: 100%;
 }
 
+.file-count {
+  margin-top: 10px;
+  font-size: 16px;
+  font-weight: bold;
+  color: #333; /* Color opcional */
+  margin-bottom: 10px;
+}
+.loading{
+  width: 80%;
+  margin: auto;
+  text-align: center;
+}
+.result-tif{
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 50%;
+}
+.result-tif h3{
+  text-align: center;
+  margin-bottom: 10px;
+}
+.result-tif a{
+  text-align: center;
+}
+.result-tif a img{
+  text-align: center;
+  width: 70%;
+}
+.result-tif a img:hover{
+  border-radius: 25px;
+ transition: 400ms;
+}
+.img-original{
+  text-align: center;
+  margin-bottom: 10px;
+}
+.img-original img{
+  width: 80%;
+}
+.img-more{
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 10px;
+}
+.img-more div{ 
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+}
+.img-more div img{
+  width: 100%;
+}

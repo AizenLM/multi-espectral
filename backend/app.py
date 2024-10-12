@@ -6,8 +6,11 @@ from werkzeug.utils import secure_filename
 import os
 import rasterio
 from rasterio.plot import show
+from rasterio import open as rio_open
 from io import BytesIO
 import matplotlib.pyplot as plt
+from datetime import datetime
+
 
 app = Flask(__name__)
 CORS(app)
@@ -18,6 +21,8 @@ os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 os.makedirs(PROCESSED_FOLDER, exist_ok=True)
 # Asegúrate de que el directorio de salida existe
 os.makedirs(OUTPUT_DIR, exist_ok=True)
+RESULTADOS_DIR = 'resultados'
+os.makedirs(RESULTADOS_DIR, exist_ok=True)
 
 @app.route('/combinar', methods=['POST'])
 def combinar_bandas():
@@ -52,7 +57,6 @@ def combinar_bandas():
         'Content-Disposition': 'attachment; filename=salida_multibanda.tif'
     }
 
-
 @app.route('/processed/<path:filename>', methods=['GET'])
 def send_processed_file(filename):
     return send_from_directory(PROCESSED_FOLDER, filename)
@@ -60,7 +64,6 @@ def send_processed_file(filename):
 @app.route('/download/<filename>', methods=['GET'])
 def download_file(filename):
     return send_file(os.path.join(OUTPUT_DIR, filename), as_attachment=True)
-
 @app.route('/espectro', methods=['POST'])
 def procesar_imagen_espectro():
     if 'image' not in request.files:
@@ -81,6 +84,9 @@ def procesar_imagen_espectro():
 
     band_images = []
 
+    # Obtener la marca de tiempo para el nombre del archivo
+    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+
     # Combinación en color falso usando tres bandas (normalmente R, G, B)
     if num_bands >= 3:
         rgb_image = np.dstack((image[0], image[1], image[2]))  # Combina las primeras tres bandas
@@ -99,7 +105,7 @@ def procesar_imagen_espectro():
         plt.close(fig)
 
         # Guardar la imagen RGB procesada en la carpeta de procesados
-        rgb_filename = f'rgb_{filename}.png'
+        rgb_filename = f'rgb_{timestamp}_{filename}.png'
         rgb_image_path = os.path.join(PROCESSED_FOLDER, rgb_filename)
         with open(rgb_image_path, 'wb') as f:
             f.write(buffer.getvalue())
@@ -122,7 +128,7 @@ def procesar_imagen_espectro():
     plt.close(fig)
 
     # Guardar la imagen original en la carpeta de procesados
-    original_filename = f'original_{filename}.png'
+    original_filename = f'original_{timestamp}_{filename}.png'
     original_image_path = os.path.join(PROCESSED_FOLDER, original_filename)
     with open(original_image_path, 'wb') as f:
         f.write(buffer.getvalue())
@@ -147,7 +153,7 @@ def procesar_imagen_espectro():
         plt.close(fig)
 
         # Guardar la banda procesada
-        band_filename = f'band_{i + 1}_{filename}.png'
+        band_filename = f'band_{i + 1}_{timestamp}_{filename}.png'
         band_image_path = os.path.join(PROCESSED_FOLDER, band_filename)
         with open(band_image_path, 'wb') as f:
             f.write(buffer.getvalue())
@@ -162,6 +168,5 @@ def procesar_imagen_espectro():
         "num_bands": num_bands,
         "band_images": band_images
     })
-
 if __name__ == '__main__':
     app.run(debug=True)
