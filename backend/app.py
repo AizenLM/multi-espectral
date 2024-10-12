@@ -10,6 +10,8 @@ from rasterio import open as rio_open
 from io import BytesIO
 import matplotlib.pyplot as plt
 from datetime import datetime
+import matplotlib
+matplotlib.use('Agg')
 
 
 app = Flask(__name__)
@@ -71,7 +73,11 @@ def procesar_imagen_espectro():
 
     file = request.files['image']
     filename = secure_filename(file.filename)
-    filepath = os.path.join(UPLOAD_FOLDER, filename)
+
+    # Obtener la marca de tiempo para evitar sobrescribir archivos con el mismo nombre
+    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+    unique_filename = f"{timestamp}_{filename}"
+    filepath = os.path.join(UPLOAD_FOLDER, unique_filename)
     file.save(filepath)
 
     # Leer la imagen multiespectral usando Rasterio
@@ -83,9 +89,6 @@ def procesar_imagen_espectro():
         return jsonify({"error": "No se pudo leer la imagen"}), 400
 
     band_images = []
-
-    # Obtener la marca de tiempo para el nombre del archivo
-    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
 
     # Combinación en color falso usando tres bandas (normalmente R, G, B)
     if num_bands >= 3:
