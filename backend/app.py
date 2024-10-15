@@ -88,7 +88,8 @@ def procesar_imagen_espectro():
     if image is None or num_bands == 0:
         return jsonify({"error": "No se pudo leer la imagen"}), 400
 
-    band_images = []
+    band_images = []        # Lista para imágenes PNG
+    band_images_tiff = []   # Lista para imágenes TIFF
 
     # Combinación en color falso usando tres bandas (normalmente R, G, B)
     if num_bands >= 3:
@@ -101,21 +102,43 @@ def procesar_imagen_espectro():
         ax.set_title('Imagen RGB Falso Color')
         ax.axis('off')
 
-        # Guardar la imagen RGB en un buffer
-        buffer = BytesIO()
-        plt.savefig(buffer, format='png')
-        buffer.seek(0)
+        # Guardar la imagen RGB en un buffer PNG
+        buffer_png = BytesIO()
+        plt.savefig(buffer_png, format='png')
+        buffer_png.seek(0)
         plt.close(fig)
 
-        # Guardar la imagen RGB procesada en la carpeta de procesados
-        rgb_filename = f'rgb_{timestamp}_{filename}.png'
-        rgb_image_path = os.path.join(PROCESSED_FOLDER, rgb_filename)
-        with open(rgb_image_path, 'wb') as f:
-            f.write(buffer.getvalue())
+        # Guardar la imagen RGB procesada en la carpeta de procesados (PNG)
+        rgb_filename_png = f'rgb_{timestamp}_{filename}.png'
+        rgb_image_path_png = os.path.join(PROCESSED_FOLDER, rgb_filename_png)
+        with open(rgb_image_path_png, 'wb') as f:
+            f.write(buffer_png.getvalue())
 
+        # Guardar la imagen RGB en formato TIFF
+        rgb_filename_tiff = f'rgb_{timestamp}_{filename}.tiff'
+        rgb_image_path_tiff = os.path.join(PROCESSED_FOLDER, rgb_filename_tiff)
+        with rasterio.open(
+            rgb_image_path_tiff,
+            'w',
+            driver='GTiff',
+            height=rgb_image.shape[0],
+            width=rgb_image.shape[1],
+            count=3,
+            dtype=rgb_image.dtype
+        ) as dst:
+            dst.write(rgb_image[:, :, 0], 1)  # Red
+            dst.write(rgb_image[:, :, 1], 2)  # Green
+            dst.write(rgb_image[:, :, 2], 3)  # Blue
+
+        # Añadir las URLs a las listas correspondientes
         band_images.append({
             "name": "Imagen RGB Falso Color",
-            "image_url": f"/processed/{rgb_filename}"
+            "image_url_png": f"/processed/{rgb_filename_png}"
+        })
+
+        band_images_tiff.append({
+            "name": "Imagen RGB Falso Color",
+            "image_url_tiff": f"/processed/{rgb_filename_tiff}"
         })
 
     # Procesar la imagen original y guardarla como imagen PNG
@@ -124,24 +147,44 @@ def procesar_imagen_espectro():
     ax.set_title('Imagen Original')
     ax.axis('off')
 
-    # Guardar la imagen original en un buffer
-    buffer = BytesIO()
-    plt.savefig(buffer, format='png')
-    buffer.seek(0)
+    # Guardar la imagen original en un buffer PNG
+    buffer_png = BytesIO()
+    plt.savefig(buffer_png, format='png')
+    buffer_png.seek(0)
     plt.close(fig)
 
-    # Guardar la imagen original en la carpeta de procesados
-    original_filename = f'original_{timestamp}_{filename}.png'
-    original_image_path = os.path.join(PROCESSED_FOLDER, original_filename)
-    with open(original_image_path, 'wb') as f:
-        f.write(buffer.getvalue())
+    # Guardar la imagen original en la carpeta de procesados (PNG)
+    original_filename_png = f'original_{timestamp}_{filename}.png'
+    original_image_path_png = os.path.join(PROCESSED_FOLDER, original_filename_png)
+    with open(original_image_path_png, 'wb') as f:
+        f.write(buffer_png.getvalue())
 
+    # Guardar la imagen original en formato TIFF
+    original_filename_tiff = f'original_{timestamp}_{filename}.tiff'
+    original_image_path_tiff = os.path.join(PROCESSED_FOLDER, original_filename_tiff)
+    with rasterio.open(
+        original_image_path_tiff,
+        'w',
+        driver='GTiff',
+        height=image.shape[1],
+        width=image.shape[2],
+        count=1,
+        dtype=image.dtype
+    ) as dst:
+        dst.write(image[0], 1)  # Guardar solo la primera banda (como imagen original)
+
+    # Añadir las URLs a las listas correspondientes
     band_images.append({
         "name": "Imagen Original",
-        "image_url": f"/processed/{original_filename}"
+        "image_url_png": f"/processed/{original_filename_png}"
     })
 
-    # Procesar cada banda y guardarla como imagen PNG en escala de grises
+    band_images_tiff.append({
+        "name": "Imagen Original",
+        "image_url_tiff": f"/processed/{original_filename_tiff}"
+    })
+
+    # Procesar cada banda y guardarla como imagen PNG y TIFF
     for i in range(num_bands):
         band = image[i]  # Rasterio maneja las bandas individualmente
         fig, ax = plt.subplots()
@@ -149,27 +192,49 @@ def procesar_imagen_espectro():
         ax.set_title(f'Banda {i + 1}')
         ax.axis('off')
 
-        # Guardar la imagen de la banda en un buffer
-        buffer = BytesIO()
-        plt.savefig(buffer, format='png')
-        buffer.seek(0)
+        # Guardar la imagen de la banda en un buffer PNG
+        buffer_png = BytesIO()
+        plt.savefig(buffer_png, format='png')
+        buffer_png.seek(0)
         plt.close(fig)
 
-        # Guardar la banda procesada
-        band_filename = f'band_{i + 1}_{timestamp}_{filename}.png'
-        band_image_path = os.path.join(PROCESSED_FOLDER, band_filename)
-        with open(band_image_path, 'wb') as f:
-            f.write(buffer.getvalue())
+        # Guardar la banda procesada como PNG
+        band_filename_png = f'band_{i + 1}_{timestamp}_{filename}.png'
+        band_image_path_png = os.path.join(PROCESSED_FOLDER, band_filename_png)
+        with open(band_image_path_png, 'wb') as f:
+            f.write(buffer_png.getvalue())
 
+        # Guardar la banda procesada como TIFF
+        band_filename_tiff = f'band_{i + 1}_{timestamp}_{filename}.tiff'
+        band_image_path_tiff = os.path.join(PROCESSED_FOLDER, band_filename_tiff)
+        with rasterio.open(
+            band_image_path_tiff,
+            'w',
+            driver='GTiff',
+            height=band.shape[0],
+            width=band.shape[1],
+            count=1,
+            dtype=band.dtype
+        ) as dst:
+            dst.write(band, 1)  # Guardar la banda como TIFF
+
+        # Añadir las URLs a las listas correspondientes
         band_images.append({
             "name": f"Banda {i + 1}",
-            "image_url": f"/processed/{band_filename}"
+            "image_url_png": f"/processed/{band_filename_png}"
+        })
+
+        band_images_tiff.append({
+            "name": f"Banda {i + 1}",
+            "image_url_tiff": f"/processed/{band_filename_tiff}"
         })
 
     return jsonify({
         "message": "Imagen multiespectral procesada correctamente",
         "num_bands": num_bands,
-        "band_images": band_images
+        "band_images": band_images,          # Imágenes PNG
+        "band_images_tiff": band_images_tiff # Imágenes TIFF
     })
+
 if __name__ == '__main__':
     app.run(debug=True)

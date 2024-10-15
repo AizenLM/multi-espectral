@@ -1,9 +1,11 @@
 import { useState } from "react";
 import axios from "axios";
-import './components/FileUpload.css'
+import './components/FileUpload.css';
+
 const DetectBands = () => {
   const [selectedFile, setSelectedFile] = useState(null);
   const [bandImages, setBandImages] = useState([]);
+  const [bandImagesTiff, setBandImagesTiff] = useState([]);  // Nuevo estado para las imágenes en TIFF
   const [originalImage, setOriginalImage] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -32,6 +34,7 @@ const DetectBands = () => {
 
     setLoading(true);
     setBandImages([]);
+    setBandImagesTiff([]);  // Limpiar las imágenes TIFF previas
     setOriginalImage(null); // Reiniciar imagen original
     setError("");
 
@@ -49,18 +52,21 @@ const DetectBands = () => {
         }
       );
 
-      const { band_images, num_frames } = response.data;
-
+      const { band_images, band_images_tiff, num_frames } = response.data;
+      console.log(response.data)
+     
       // Si es un GIF, tratamos cada frame como una banda
       if (isGif && num_frames) {
         setBandImages(band_images);
-        const firstFrameUrl = `http://localhost:5000${band_images[0].image_url}`;
+        setBandImagesTiff(band_images_tiff);
+        const firstFrameUrl = `http://localhost:5000${band_images[0].image_url_png}`;
         setOriginalImage(firstFrameUrl); // Usar el primer frame como "original"
       } else {
         setBandImages(band_images);
+        setBandImagesTiff(band_images_tiff);
 
         // Establecer la imagen original para imágenes multiespectrales
-        const originalImageUrl = `http://localhost:5000${band_images[0].image_url}`; // Suponiendo que la imagen original está en la primera posición
+        const originalImageUrl = `http://localhost:5000${band_images[0].image_url_png}`; // Suponiendo que la imagen original está en la primera posición
         setOriginalImage(originalImageUrl);
       }
     } catch (err) {
@@ -76,17 +82,17 @@ const DetectBands = () => {
       <div className="panel-content">
         <h1>Procesar Imagen Multiespectral</h1>
 
-          <div className="file-upload-container">
-            <label htmlFor="file-upload" className="custom-file-upload">
-                Seleccionar archivos
-            </label>
-            <input
-                id="file-upload"
-                type="file"
-                onChange={handleFileChange}
-                accept=".tiff,.tif,.gif,.png,.jpg,.jpeg"Llama a la función prop cuando cambia el input
-                className="file-input"
-            />
+        <div className="file-upload-container">
+          <label htmlFor="file-upload" className="custom-file-upload">
+            Seleccionar archivos
+          </label>
+          <input
+            id="file-upload"
+            type="file"
+            onChange={handleFileChange}
+            accept=".tiff,.tif,.gif,.png,.jpg,.jpeg"
+            className="file-input"
+          />
         </div>
         <button
           className="btn-primary"
@@ -117,13 +123,25 @@ const DetectBands = () => {
               {bandImages.map((band, index) => (
                 <div
                   key={index}
-                  className="animate__animated animate__bounceIn"
+                  className="animate__animated animate__bounceIn imgs-bands"
                 >
                   <h2>{band.name}</h2>
                   <img
-                    src={`http://localhost:5000${band.image_url}`}
+                    src={`http://localhost:5000${band.image_url_png}`}
                     alt={isGif ? `Frame ${index + 1}` : `Banda ${index + 1}`}
                   />
+                  {/* Enlace de descarga para el archivo TIFF */}
+                  {bandImagesTiff[index] && bandImagesTiff[index].image_url_tiff ? (
+                    <a
+                      href={`http://localhost:5000${bandImagesTiff[index].image_url_tiff}`}
+                      download
+                      className="btn-download"
+                    >
+                      Descargar como .TIFF
+                    </a>
+                  ) : (
+                    <p>No TIFF disponible</p>
+                  )}
                 </div>
               ))}
             </div>
@@ -133,4 +151,5 @@ const DetectBands = () => {
     </div>
   );
 };
+
 export default DetectBands;
