@@ -10,7 +10,6 @@ const DetectBands = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [isGif, setIsGif] = useState(false); // Nuevo estado para manejar si es GIF
-
   // Manejar la selección de archivo
   const handleFileChange = (event) => {
     const file = event.target.files[0];
@@ -94,6 +93,12 @@ const DetectBands = () => {
             className="file-input"
           />
         </div>
+          {/* Mostrar la cantidad de archivos seleccionados */}
+          {selectedFile && (
+                    <div className="file-count">
+                        <p>Archivo {selectedFile.name}</p>
+                    </div>
+                )}
         <button
           className="btn-primary"
           onClick={handleUpload}
@@ -137,7 +142,7 @@ const DetectBands = () => {
                       download
                       className="btn-download"
                     >
-                      Descargar como .TIFF
+                     <i className="material-icons">download</i> <p>Descargar como .TIFF</p>
                     </a>
                   ) : (
                     <p>No TIFF disponible</p>

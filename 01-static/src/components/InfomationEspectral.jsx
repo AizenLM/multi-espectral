@@ -5,7 +5,7 @@ import arrowSvg from "../assets/arrow_upward.svg";
 function InformationEspectral() {
   return (
     <>
-      <section className="animate__animated animate__headShake" id="Que-son">
+      <section id="Que-son" className="animate__animated animate__headShake">
         <h2>¿Qué son las imágenes multiespectrales?</h2>
         <div className="section-content">
           <div>
@@ -231,7 +231,9 @@ function InformationEspectral() {
       </section>
       <div className="up-button">
         <a href="#Que-son">
-          <img src={arrowSvg} alt="" srcset="" />
+          <i className="material-icons">
+          arrow_upward
+            </i>
         </a>
       </div>
       <section className="animate__animated animate__headShake">
