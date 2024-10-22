@@ -48,7 +48,7 @@ function AttachBands() {
     };
 
     return (
-        <div className="content animate__animated animate__heartBeat">
+        <div className="content animate__animated animate__fadeInUpBig">
             <div className="panel-content">
                 <h1>Subir Bandas Multiespectrales</h1>
                 <label htmlFor="files-bands">Ingresa todas las bandas que deseas juntar</label>

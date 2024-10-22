@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 
 function NavBar() {
   return (
@@ -9,13 +9,13 @@ function NavBar() {
       </div>
       <div>
         <li>
-          <Link to={"/"}>Home</Link>
+          <NavLink to={"/"} className={({ isActive }) => isActive ? 'a-active' : ''}>Home</NavLink>
         </li>
         <li>
-        <Link to={'/detect-bands'}>Detectar Bandas</Link>
+          <NavLink to={'/detect-bands'} className={({ isActive }) => isActive ? 'a-active' : ''}>Detectar Bandas</NavLink>
         </li>
         <li>
-        <Link to={'/attach-bands'}>Adjuntar Bandas</Link>
+          <NavLink to={'/attach-bands'} className={({ isActive }) => isActive ? 'a-active' : ''}>Adjuntar Bandas</NavLink>
         </li>
       </div>
     </nav>

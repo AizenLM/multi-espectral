@@ -77,7 +77,7 @@ const DetectBands = () => {
   };
 
   return (
-    <div className="content animate__animated animate__heartBeat">
+    <div className="content animate__animated animate__fadeInUpBig">
       <div className="panel-content">
         <h1>Procesar Imagen Multiespectral</h1>
 

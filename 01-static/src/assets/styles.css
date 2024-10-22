@@ -50,6 +50,10 @@ nav div li a:hover {
   text-decoration: overline;
   transition: 400ms;
 }
+.a-active{
+  opacity: 1;
+  text-decoration: overline;
+}
 .title {
   font-size: 2rem;
   font-weight: 600;
@@ -120,6 +124,10 @@ section {
   border-radius: 10px;
   box-shadow: 0 16px 12px rgba(56, 56, 56, 0.1);
   color: white;
+}
+section article{
+  margin-bottom: 20px;
+  padding: 30px;
 }
 .section-content {
   padding: 10px;
