@@ -229,13 +229,7 @@ function InformationEspectral() {
           </div>
         </div>
       </section>
-      <div className="up-button">
-        <a href="#Que-son">
-          <i className="material-icons">
-          arrow_upward
-            </i>
-        </a>
-      </div>
+      
       <section className="animate__animated animate__headShake">
         <h2>Aplicaciones de las Imágenes Multiespectrales</h2>
         <div className="section-content">

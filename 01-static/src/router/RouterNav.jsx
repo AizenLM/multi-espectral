@@ -1,13 +1,12 @@
 import React from "react";
-import PropTypes from "prop-types";
 import { Route, Routes } from "react-router-dom";
-import Home from "../pages/Home";
 import AttachBands from "../pages/AttachBands";
 import DetectBands from "../pages/DetectBands";
-import Login from "../auth/Login";
-import Register from "../auth/register";
+import Home from "../pages/Home/Home";
+import Login from "../auth/pages/Login";
+import Register from "../auth/pages/Register";
 
-function RouterNav(props) {
+function RouterNav() {
   return (
     <Routes>
       <Route path="/" element={<Home></Home>}></Route>
@@ -18,7 +17,4 @@ function RouterNav(props) {
     </Routes>
   );
 }
-
-RouterNav.propTypes = {};
-
 export default RouterNav;
