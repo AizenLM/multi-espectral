@@ -4,6 +4,7 @@
   --primary-color: rgb(0, 0, 99);
   --color-section-background: #11151b;
   --btn-color-download: #2c6ee6;
+  --btn-color-primary: #4CAF50;
 }
 #root{
   display: flex;
@@ -350,4 +351,38 @@ footer div li a{
   font-weight: 600;
   color: rgb(98, 98, 98);
 
+}
+.content-login{
+  text-transform: uppercase;
+  margin: auto;
+  margin-top: 10%;
+  background-color: var(--color-section-background);
+  width: 30%;
+  color: white;
+  border-radius: 20px;
+  box-shadow: 0px 2px 4px 0px rgb(199, 199, 199);
+}
+
+.form-login{
+  display: flex;
+  padding: 40px;
+  flex-direction: column;
+  gap: 20px;
+}
+.form-login input{
+  padding: 8px;
+  border-radius: 5px;
+}
+.form-login button{
+  margin: auto;
+  width: 60%;
+  padding: 10px;
+  background-color: var(--btn-color-primary);
+  color: white;
+  font-size: 1rem;
+  font-weight: 500;
+  border-radius: 10px;
+}
+.form-login div{
+  margin: auto;
 }

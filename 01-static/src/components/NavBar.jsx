@@ -5,7 +5,7 @@ function NavBar() {
   return (
     <nav>
       <div>
-        <Link className="title" to={"/"}>Multi-Espectral</Link>
+        <Link className="title" to={"/"}>ESPECTRAL</Link>
       </div>
       <div>
         <li>
@@ -16,6 +16,9 @@ function NavBar() {
         </li>
         <li>
           <NavLink to={'/attach-bands'} className={({ isActive }) => isActive ? 'a-active' : ''}>Adjuntar Bandas</NavLink>
+        </li>
+        <li>
+          <NavLink to={'/login'} className={({ isActive }) => isActive ? 'a-active' : ''}>Login</NavLink>
         </li>
       </div>
     </nav>

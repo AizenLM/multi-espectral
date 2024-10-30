@@ -5,7 +5,7 @@ export default function Footer() {
   return (
     <footer>
         <div>
-            <h1>Multi-Espectral</h1>
+            <h1>ESPECTRAL</h1>
         </div>
         <div>
             <li>
