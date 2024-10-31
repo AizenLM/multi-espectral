@@ -7,14 +7,17 @@ import Login from "../auth/pages/Login";
 import Register from "../auth/pages/Register";
 
 function RouterNav() {
-  return (
-    <Routes>
-      <Route path="/" element={<Home></Home>}></Route>
-      <Route path="/detect-bands" element={<DetectBands></DetectBands>}></Route>
-      <Route path="/attach-bands" element={<AttachBands></AttachBands>}></Route>
-      <Route path="/login" element={<Login></Login>}></Route>
-      <Route path="/register" element={<Register></Register>}> </Route>
-    </Routes>
-  );
+  return ( <></>
+    // <Routes>
+    //   <Route path="/" element={<Home></Home>}></Route>
+    //   <Route path="/detect-bands" element={<DetectBands></DetectBands>}></Route>
+    //   <Route path="/attach-bands" element={<AttachBands></AttachBands>}></Route>
+    //   <Route path="/login" element={<Login></Login>}></Route>
+    //   <Route path="/register" element={<Register></Register>}>
+    //     {" "}
+    //   </Route>
+    // </Routes>
+  // );
+  )
 }
 export default RouterNav;

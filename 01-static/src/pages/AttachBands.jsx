@@ -2,6 +2,7 @@ import { useState } from "react";
 import axios from "axios";
 import BandCombinationInfo from "./components/BandCombinationInfo";
 import FileUpload from "./components/FileUpload"; // Importa el nuevo componente FileUpload
+import Layout from "../layout/Layout";
 function AttachBands() {
     const [files, setFiles] = useState(null);
     const [downloadLink, setDownloadLink] = useState('');
@@ -48,7 +49,9 @@ function AttachBands() {
     };
 
     return (
-        <div className="content animate__animated animate__fadeInUpBig">
+       <>
+       <Layout>
+       <div className="content animate__animated animate__fadeInUpBig">
             <div className="panel-content">
                 <h1>Subir Bandas Multiespectrales</h1>
                 <label htmlFor="files-bands">Ingresa todas las bandas que deseas juntar</label>
@@ -80,6 +83,8 @@ function AttachBands() {
             )}
             <BandCombinationInfo />
         </div>
+       </Layout>
+       </>
     );
 }
 

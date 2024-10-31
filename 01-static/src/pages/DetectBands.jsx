@@ -1,6 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
 import './components/FileUpload.css';
+import Layout from "../layout/Layout";
 
 const DetectBands = () => {
   const [selectedFile, setSelectedFile] = useState(null);
@@ -77,7 +78,9 @@ const DetectBands = () => {
   };
 
   return (
-    <div className="content animate__animated animate__fadeInUpBig">
+  <>
+  <Layout>
+  <div className="content animate__animated animate__fadeInUpBig">
       <div className="panel-content">
         <h1>Procesar Imagen Multiespectral</h1>
 
@@ -154,6 +157,8 @@ const DetectBands = () => {
         )}
       </div>
     </div>
+  </Layout>
+  </>
   );
 };
 
