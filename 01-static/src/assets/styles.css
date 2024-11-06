@@ -402,3 +402,55 @@ footer div li a{
   font-size: 0.5rem;
   border: 1px solid white;
 }
+.login-content{
+  align-self: center;
+  display: flex;
+  flex-direction: column;
+  margin: auto;
+}
+.user-profile{
+  cursor: pointer;
+  font-weight: 600;
+  color: var(--color-background);
+}
+
+
+.user-menu {
+  position: absolute;
+  top: 110%; /* Se despliega debajo del nombre del usuario */
+  right: 8;
+  display: flex;
+  flex-direction: column;
+  background: white;
+  color: black;
+  padding: 15px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+  z-index: 1000;
+}
+
+.user-menu p {
+  margin: 5px 0;
+}
+.user-menu .email{
+  font-size: 0.7rem;
+}
+
+.user-menu hr {
+  margin: 10px 0;
+  border: 0.5px solid #ddd;
+}
+
+.user-menu a, .logout-button {
+  display: block;
+  color: black;
+  padding: 5px 0;
+  text-decoration: none;
+}
+
+.logout-button {
+  background: none;
+  border: none;
+  color: red;
+  cursor: pointer;
+}

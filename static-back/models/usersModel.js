@@ -1,6 +1,8 @@
 import mongoose from "mongoose";
-import bcrypt, { hash } from "bcrypt";
-import {generateAccessToken} from '../auth/generateToken.js'
+import bcrypt from "bcrypt";
+import {generateAccessToken, generateRefreshToken} from '../auth/generateToken.js'
+import Token from "./Token.js";
+import getUserInfo from "../lib/getUserInfo.js";
 const userSchema = new mongoose.Schema(
   {
     firstName: {
@@ -50,16 +52,28 @@ userSchema.methods.emailExist = async (email) => {
   const result = await mongoose.model("User").find({ email });
   return result.length > 0;
 };
+
+
+
 userSchema.methods.commparePassword = async (password, hash) => {
   const same = await bcrypt.compare(password, hash);
   return same;
 };
 
 userSchema.methods.createAccessToken = ()=>{
-    return generateAccessToken(getUserInfo(this))
+  console.log(User)
+    return generateAccessToken(getUserInfo(User))
 }
-userSchema.methods.createRefreshToken = ()=>{
-  
+userSchema.methods.createRefreshToken = async ()=>{
+  const refreshToken = generateRefreshToken(getUserInfo(User));
+  try{
+    await new Token({token: refreshToken}).save();
+    return refreshToken;
+  }
+  catch(error){
+    console.log(error)
+    next();
+  }
 }
 
 const User = mongoose.model("User", userSchema);

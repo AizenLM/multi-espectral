@@ -7,6 +7,7 @@ import Login from "../auth/pages/Login";
 import Register from "../auth/pages/Register";
 import App from "../App";
 import ProtectedRoute from "./ProtectedRoute";
+import Courses from "../pages/Courses/Courses";
 
 export const router = createBrowserRouter([
   {
@@ -20,6 +21,10 @@ export const router = createBrowserRouter([
   {
     path: "/register",
     element: <Register />,
+  },
+  {
+    path: "/courses",
+    element: <Courses />,
   },
   {
     path: "/detect-bands",

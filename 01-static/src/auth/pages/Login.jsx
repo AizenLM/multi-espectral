@@ -29,9 +29,11 @@ function Login() {
         }),
       });
       if (response.ok) {
-        console.log("Se creo el usuario correctamente");
-        console.log(response)
-
+        console.log("Acceso correcto");
+        const json = await response.json();
+        if(json.body.accessToken && json.body.refreshToken){
+          auth.saveUser(json);
+        }
         setMessageError('')
         goTo('/login')
       } else {

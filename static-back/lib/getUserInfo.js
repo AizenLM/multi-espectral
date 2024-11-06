@@ -1,8 +1,10 @@
 const getUserInfo = (user)=>{
+    console.log(user)
     return{
-        id: user.id,
+        id: user._id,
         firstName: user.firstName,
         lastName: user.lastName,
-        emai: user.emai
+        email: user.email
     }
 }
+export default getUserInfo;

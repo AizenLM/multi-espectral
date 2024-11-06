@@ -4,7 +4,6 @@ import { useAuth } from "../auth/AuthProvider";
 
 const ProtectedRoute = () => {
   const { isAuthenticated } = useAuth();
-  console.log("is authenticated ", isAuthenticated);
   return isAuthenticated ? (
     <Outlet></Outlet>
   ) : (

@@ -1,0 +1,43 @@
+.Container-Courses{
+    padding: 20px;
+    margin: auto;
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+  }
+.course-box{
+    max-width: 35%;
+    text-align: center;
+    text-decoration: none;
+    padding: 10px;
+    background-color: var(--color-background);
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+  }
+  .course-box:hover {
+    background-color: #152035;
+    transition: 550ms;
+    border-radius: 20px;
+    outline: 1px solid white;
+  }
+  .course-box:hover span{
+    text-decoration: underline;
+  }
+  .course-box:hover img{
+    border-radius: 20px;
+    transition: 500ms;
+  }
+  
+  .course-box span{
+    color: white;
+    
+  
+  }
+  .course-box img{
+    width: 80%;
+  }
