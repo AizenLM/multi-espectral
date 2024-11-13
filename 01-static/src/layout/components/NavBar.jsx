@@ -5,12 +5,12 @@ import ContentLogin from "./ContentLogin";
 import Login from "../../auth/pages/Login";
 
 function NavBar() {
-  const { isAuthenticated, infoUser } = useAuth();
+  const { isAuthenticated, infoUser, setIsAuthenticated } = useAuth();
   const [showUserMenu, setShowUserMenu] = useState(false);
   const navigate = useNavigate();
 
   const logout = () => {
-
+    setIsAuthenticated(false);
   }
   const toggleUserMenu = () => {
     setShowUserMenu((prev) => !prev);

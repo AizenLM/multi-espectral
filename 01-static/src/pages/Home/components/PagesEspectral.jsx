@@ -48,7 +48,7 @@ export const PagesEspectral = () => {
           >
             <h3>Sentinel Hub</h3>
             <img
-              src="https://i.ytimg.com/vi/uBinB7CXbzg/maxresdefault.jpg"
+              src="https://www.sentinel-hub.com/img/sentinel_hub_by_planet_logo_black.png"
               alt="sentinel hub logo"
             />
             <p>

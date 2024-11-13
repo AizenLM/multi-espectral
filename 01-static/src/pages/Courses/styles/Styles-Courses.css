@@ -41,3 +41,9 @@
   .course-box img{
     width: 80%;
   }
+button{
+  cursor: pointer;
+  padding: 7px;
+  border: none;
+  border-radius: 7px;
+}

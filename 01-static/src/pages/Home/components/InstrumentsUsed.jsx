@@ -49,7 +49,7 @@ export const InstrumentsUsed = () => {
               </p>
               <div className="instrument-img">
                 <img
-                  src="https://www.researchgate.net/publication/344499765/figure/fig3/AS:943727254196231@1602013519366/Figura-10-Dron-multirotor-con-camara-multiespectral-acoplada.ppm"
+                  src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRYa7OTlJd7MhxUD8Gym5Q-jVW1PN0heBeP7rLuVzd92FKQQu5fDHkq3K1zZjP24nYKFMQ&usqp=CAU"
                   alt=""
                 />
               </div>

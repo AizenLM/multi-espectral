@@ -48,7 +48,7 @@ function Login() {
 
   return (
    <Layout>
-     <div className="content-login">
+     <div className="content-login animate__animated animate__bounceInUp">
       <form className="form-login" onSubmit={handleSubmit}>
         <h1>Sign in to ESPECTRAL</h1>
         <label htmlFor="email">Email</label>
