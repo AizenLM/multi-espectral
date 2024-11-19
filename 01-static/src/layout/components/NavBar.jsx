@@ -7,7 +7,15 @@ import Login from "../../auth/pages/Login";
 function NavBar() {
   const { isAuthenticated, infoUser, setIsAuthenticated } = useAuth();
   const [showUserMenu, setShowUserMenu] = useState(false);
+  const [letterName, setLetterName] = useState("");
   const navigate = useNavigate();
+  useEffect(() => {
+    if(infoUser.firstName){
+      const letter = infoUser.firstName[0]
+      setLetterName(letter.toUpperCase())
+    }
+  }, [infoUser])
+  
 
   const logout = () => {
     setIsAuthenticated(false);
@@ -24,7 +32,6 @@ function NavBar() {
         <hr />
         <NavLink to="/my-courses">Mis cursos</NavLink>
         <NavLink to="/preferences">Preferencias</NavLink>
-        <NavLink to="/profile">Información Personal</NavLink>
         <button onClick={logout} className="logout-button">
           Cerrar sesión
         </button>
@@ -88,7 +95,7 @@ function NavBar() {
         <li>
         {isAuthenticated ? (
             <div className="user-profile" onClick={toggleUserMenu}>
-              {infoUser.firstName}
+              {letterName}
               {showUserMenu && renderUserMenu()}
             </div>
           ) : (

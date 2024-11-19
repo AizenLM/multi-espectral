@@ -1,0 +1,92 @@
+:root {
+  --color-background: #181f26;
+  --color-nav: rgb(240, 245, 250);
+  --primary-color: rgb(0, 0, 99);
+  --color-section-background: #11151b;
+  --btn-color-download: #2c6ee6;
+  --btn-color-primary: #4caf50;
+  --btn-color-primary-hover: #45a049;
+}
+.content-user {
+  width: 75%;
+  margin: auto;
+  margin-top: 8%;
+  background: white;
+  padding: 40px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2px;
+}
+.side-nav {
+  border-radius: 10px;
+  width: 90%;
+  box-shadow: 0 16px 12px rgba(56, 56, 56, 0.1);
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.side-nav h1 {
+  text-align: center;
+  margin-bottom: 10px;
+}
+.side-nav div ul {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.side-nav div ul a {
+  text-decoration: none;
+  width: 90%;
+  padding: 7px;
+  font-size: 1.3rem;
+  color: gray;
+}
+.side-nav div ul a:hover{
+  outline: 2px solid var(--color-section-background);
+  border-radius: 10px;
+}
+
+.a-user-active {
+  color: white;
+  background-color: var(--color-section-background);
+  border-radius: 10px;
+}
+.main-content {
+  width: 70%;
+  border: 2px solid gray;
+  border-radius: 10px;
+  padding: 30px;
+  display: flex;
+  gap: 20px;
+}
+.main-content form {
+  width: 100%;
+}
+.content-user form div {
+  margin: auto;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+.content-user form div input,
+select {
+  padding: 8px;
+  border-radius: 7px;
+  margin-top: 5px;
+}
+.content-user form div textarea {
+  height: 100%;
+}
+.content-user form button {
+  margin-top: 10px;
+  font-weight: 800;
+  padding: 10px;
+  background-color: var(--btn-color-primary);
+  color: white;
+}
+.twoFactorAuth{
+  padding: 10px;
+  width: 10;
+  border: 2px solid rgb(88, 0, 0);
+}

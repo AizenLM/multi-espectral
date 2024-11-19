@@ -8,6 +8,11 @@ import Register from "../auth/pages/Register";
 import App from "../App";
 import ProtectedRoute from "./ProtectedRoute";
 import Courses from "../pages/Courses/Courses";
+import PagePreferences from "../pages/preferences/PagePreferences";
+import UserInfo from "../pages/preferences/components/UserInfo";
+import UserSecurity from "../pages/preferences/components/UserSecurity";
+import UserPrivacity from "../pages/preferences/components/UserPrivacity";
+import PaymentMethods from "../pages/preferences/components/PaymentMethods";
 
 export const router = createBrowserRouter([
   {
@@ -34,5 +39,17 @@ export const router = createBrowserRouter([
     path: "/attach-bands",
     element: <ProtectedRoute></ProtectedRoute>,
     children: [{ path: "/attach-bands", element: <AttachBands></AttachBands> }],
+  },
+  {
+    path: "/preferences",
+    element: <ProtectedRoute></ProtectedRoute>,
+    children: [{ path: "/preferences", element: <PagePreferences></PagePreferences>, children:[
+      {index: true, element: <UserInfo />},
+      {path: "user-info", element: <UserInfo></UserInfo>},
+      {path: "security", element: <UserSecurity></UserSecurity>},
+      {path: "privacity", element: <UserPrivacity></UserPrivacity>},
+      {path: "payment-methods", element: <PaymentMethods></PaymentMethods>}
+
+    ] }],
   },
 ]);
