@@ -13,6 +13,7 @@ import UserInfo from "../pages/preferences/components/UserInfo";
 import UserSecurity from "../pages/preferences/components/UserSecurity";
 import UserPrivacity from "../pages/preferences/components/UserPrivacity";
 import PaymentMethods from "../pages/preferences/components/PaymentMethods";
+import MyCourses from "../pages/Courses/MyCourses";
 
 export const router = createBrowserRouter([
   {
@@ -52,4 +53,9 @@ export const router = createBrowserRouter([
 
     ] }],
   },
+  {
+    path: "/my-courses",
+    element: <ProtectedRoute></ProtectedRoute>,
+    children: [{path: '/my-courses', element: <MyCourses></MyCourses>}]
+  }
 ]);
