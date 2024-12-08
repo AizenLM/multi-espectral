@@ -459,3 +459,14 @@ footer div li a{
   color: red;
   cursor: pointer;
 }
+.class-navlink{
+  margin-top: 5px;
+  padding: 20px;
+}
+.item-new{
+  background-color: rgb(255, 238, 5);
+  font-size: small;
+  padding: 3px;
+  border-radius: 12px;
+  border: 1px solid var(--color-background);
+}

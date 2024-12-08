@@ -32,6 +32,7 @@ function NavBar() {
         <hr />
         <NavLink to="/my-courses">Mis cursos</NavLink>
         <NavLink to="/preferences">Preferencias</NavLink>
+        <NavLink to="/land-cover"><div className="class-navlink">Clasificación de suelo <span className="item-new">BETA</span></div></NavLink>
         <button onClick={logout} className="logout-button">
           Cerrar sesión
         </button>

@@ -14,6 +14,7 @@ import UserSecurity from "../pages/preferences/components/UserSecurity";
 import UserPrivacity from "../pages/preferences/components/UserPrivacity";
 import PaymentMethods from "../pages/preferences/components/PaymentMethods";
 import MyCourses from "../pages/Courses/MyCourses";
+import LandCover from "../pages/LandCoverIA/LandCover";
 
 export const router = createBrowserRouter([
   {
@@ -40,6 +41,11 @@ export const router = createBrowserRouter([
     path: "/attach-bands",
     element: <ProtectedRoute></ProtectedRoute>,
     children: [{ path: "/attach-bands", element: <AttachBands></AttachBands> }],
+  },
+  {
+    path: "/land-cover",
+    element: <ProtectedRoute></ProtectedRoute>,
+    children: [{path: "/land-cover", element: <LandCover></LandCover>}]
   },
   {
     path: "/preferences",

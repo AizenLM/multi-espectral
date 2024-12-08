@@ -7,10 +7,13 @@ import os
 import rasterio
 from rasterio.plot import show
 from rasterio import open as rio_open
+import rasterio as rio
 from io import BytesIO
 import matplotlib.pyplot as plt
 from datetime import datetime
+
 import matplotlib
+from LandCover import normalize_band, prepare_sample, train_model, plot_confusion_matrix
 matplotlib.use('Agg')
 
 
@@ -235,6 +238,145 @@ def procesar_imagen_espectro():
         "band_images": band_images,          # Imágenes PNG
         "band_images_tiff": band_images_tiff # Imágenes TIFF
     })
+@app.route('/uploadlandcover', methods=['POST'])
+def upload_image():
+    try:
+        if 'file' not in request.files:
+            return jsonify({"error": "No file part in the request."}), 400
+        file = request.files['file']
+        if file.filename == '':
+            return jsonify({"error": "No selected file."}), 400
+
+        upload_path = 'uploaded_image.tif'
+        file.save(upload_path)
+        return jsonify({"message": "File uploaded successfully", "file_path": upload_path})
+
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+@app.route('/processlandcover', methods=['GET'])
+def process_data():
+    try:
+        s2_image_path = request.args.get('file_path', 'uploaded_image.tif')
+
+        if not os.path.exists(s2_image_path):
+            return jsonify({"error": "File not found."}), 400
+
+        s2 = rio.open(s2_image_path)
+        s2_image = s2.read() / 1e4
+
+        # Extract and normalize bands
+        red = normalize_band(s2_image[2])
+        green = normalize_band(s2_image[1])
+        blue = normalize_band(s2_image[0])
+        nir = normalize_band(s2_image[6])
+        ndvi = normalize_band(s2_image[7])
+
+        rgb = np.dstack((red, green, blue))
+        fcc = np.dstack((nir, red, green))
+
+        fig, axs = plt.subplots(1, 2, figsize=(12, 6))
+        axs[0].imshow(rgb)
+        axs[0].set_title("Natural Color Composite")
+        axs[0].axis("off")
+        axs[1].imshow(fcc)
+        axs[1].set_title("False Color Composite")
+        axs[1].axis("off")
+
+        output = BytesIO()
+        plt.tight_layout()
+        plt.savefig(output, format="png")
+        output.seek(0)
+
+        output_path = 'static/composites.png'
+        with open(output_path, 'wb') as f:
+            f.write(output.read())
+        
+        plt.close()
+
+        return jsonify({"image_url": "/static/composites.png"})
+
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+@app.route('/classify', methods=['GET'])
+def classify_data():
+    try:
+        sample = prepare_sample()
+        if sample.empty:
+            return jsonify({"error": "Sample data is empty or could not be loaded."}), 500
+
+        s2_image_path = request.args.get('file_path', 'uploaded_image.tif')
+        rf_model, x_test, y_test = train_model(sample, s2_image_path)
+
+        y_pred = rf_model.predict(x_test)
+        output = plot_confusion_matrix(y_test, y_pred)
+
+        output_path = 'static/confusion_matrix.png'
+        with open(output_path, 'wb') as f:
+            f.write(output.read())
+        
+        plt.close()
+
+        return jsonify({"image_url": "/static/confusion_matrix.png"})
+
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+@app.route('/generate_luc', methods=['GET'])
+def generate_luc():
+    try:
+        if not os.path.exists('rasters'):
+            os.makedirs('rasters')
+
+        s2_image_path = request.args.get('file_path', 'uploaded_image.tif')
+
+        s2 = rio.open(s2_image_path)
+        s2_image = s2.read() / 1e4
+
+        red = normalize_band(s2_image[2])
+        green = normalize_band(s2_image[1])
+        blue = normalize_band(s2_image[0])
+        nir = normalize_band(s2_image[6])
+        ndvi = normalize_band(s2_image[7])
+
+        bands = np.stack([red, green, blue, nir, ndvi], axis=-1)
+        reshaped_bands = bands.reshape((-1, bands.shape[2]))
+        luc_classification = (reshaped_bands.mean(axis=1) > 0.5).astype(int)
+        luc_classification = luc_classification.reshape((s2.height, s2.width))
+
+        output_path_tif = 'rasters/luc.tif'
+        with rio.open(output_path_tif, 'w', driver='GTiff', count=1, dtype='uint8', crs=s2.crs, transform=s2.transform, width=s2.width, height=s2.height) as dst:
+            dst.write(luc_classification, 1)
+
+        output_path_png = 'rasters/luc.png'
+        with Image.open(output_path_tif) as img:
+            img.save(output_path_png, 'PNG')
+
+        return jsonify({
+            "message": "Files generated successfully",
+            "tif_download_url": "/download_luc_tif",
+            "png_view_url": "/download_luc_png"
+        })
+
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+@app.route('/download_luc_tif', methods=['GET'])
+def download_luc_tif():
+    try:
+        output_path_tif = 'rasters/luc.tif'
+        return send_file(output_path_tif, as_attachment=True, download_name="luc.tif")
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+@app.route('/download_luc_png', methods=['GET'])
+def download_luc_png():
+    try:
+        output_path_png = 'rasters/luc.png'
+        return send_file(output_path_png, as_attachment=False, download_name="luc.png", mimetype='image/png')
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 
 if __name__ == '__main__':
     app.run(debug=True)
