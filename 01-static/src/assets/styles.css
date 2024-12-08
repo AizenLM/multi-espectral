@@ -464,9 +464,82 @@ footer div li a{
   padding: 20px;
 }
 .item-new{
+  margin-left: 4px; 
   background-color: rgb(255, 238, 5);
-  font-size: small;
-  padding: 3px;
+  font-size: x-small;
+  padding: 2px;
   border-radius: 12px;
   border: 1px solid var(--color-background);
+}.land-cover-container {
+  padding: 50px;
+}
+.land-cover-container h2{
+  text-align: center;
+  font-size: 2rem;
+}
+.process-section{
+  margin-top: 10px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
+.process-section button{
+  padding: 10px;
+  font-weight: 700;
+  color: white;
+  background-color: var(--btn-color-primary);
+}
+.download-section{
+  margin-top: 10px;
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+}
+.download-section button{
+  color: white;
+  background-color: var(--btn-color-download);
+  font-weight: 600;
+}
+.result-section, .classification-result-section, .luc-result-section {
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: auto;
+  margin-bottom: 10px;
+}
+.result-section img{
+  margin-top: 20px;
+ width: 80%;
+
+}
+.luc-result-section img{
+  width: 90%;
+}
+.section-multi-func div p{
+  text-align: justify;
+}
+.text-just {
+  width: 70%;
+  text-align: justify;
+}
+.content-band-detection{
+  padding: 30px;
+}
+.content-band-detection h3{
+  font-size: 1.5rem;
+  text-decoration: double;
+}
+.content-band-detection p{
+  text-align: justify;
+}
+.content-band-detection ul li{
+  margin-top: 10px;
+  width: 70%;
+  margin: auto;
+}
+.text-center code{
+  text-align: center;
+ font-size: 3rem;
 }

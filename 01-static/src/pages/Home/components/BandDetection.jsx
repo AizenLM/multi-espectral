@@ -3,9 +3,9 @@ import React from "react";
 export const BandDetection = () => {
   return (
     <>
-      <section>
+      <section className="band-detection-inf">
         <h2>¿Qué es la Detección de Bandas Multiespectrales?</h2>
-        <p>
+        <p className='text-just'>
           La detección de bandas multiespectrales implica capturar y analizar
           diferentes partes del espectro electromagnético utilizando sensores
           especializados. Estos sensores dividen el espectro en varias bandas,
@@ -13,9 +13,8 @@ export const BandDetection = () => {
           esencial en aplicaciones como la teledetección, la agricultura y los
           estudios medioambientales.
         </p>
-        <div>
+        <div className="content-band-detection">
           <h2>Proceso de Detección de Bandas Multiespectrales</h2>
-
           <article>
             <h3>1. Captura de Datos Multiespectrales</h3>
             <p>
@@ -102,7 +101,7 @@ export const BandDetection = () => {
               </li>
             </ul>
             <p>Fórmula básica del NDVI:</p>
-            <p>
+            <p className="text-center">
               <code>NDVI = (NIR - Red) / (NIR + Red)</code>
             </p>
           </article>

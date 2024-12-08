@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import Layout from '../../layout/Layout';
 
+
 function LandCover() {
   const [image, setImage] = useState(null);
   const [imageUrl, setImageUrl] = useState(null);
@@ -130,7 +131,10 @@ function LandCover() {
           {resultUrl && !processing && (
             <div className="result-section">
               <h3>Processed Image</h3>
-              <img src={`http://localhost:5000/${resultUrl}`} alt="Processed result" style={{ width: '100%' }} />
+              <img src={`http://localhost:5000/${resultUrl}`} alt="Processed result" />
+              <img src={'/public/imgs/tabla-data-landcover.png'} alt="tabla-data-landcover" />
+              <img src={'/public/imgs/tabla-bands-landcover.png'} alt="tabla-data-landcover" />
+              <img src={'/public/imgs/tabla-nvi-landcover.png'} alt="tabla-data-landcover" />
             </div>
           )}
 
@@ -138,7 +142,7 @@ function LandCover() {
           {classificationUrl && !processing && (
             <div className="classification-result-section">
               <h3>Classified Image</h3>
-              <img src={`http://localhost:5000/${classificationUrl}`} alt="Classified result" style={{ width: '100%' }} />
+              <img src={`http://localhost:5000/${classificationUrl}`} alt="Classified result" />
             </div>
           )}
 
@@ -146,7 +150,7 @@ function LandCover() {
           {lucUrl && !processing && (
             <div className="luc-result-section">
               <h3>LUC Image</h3>
-              <img src={`http://localhost:5000/${lucUrl}`} alt="LUC result" style={{ width: '100%' }} />
+              <img src={`http://localhost:5000/${lucUrl}`} alt="LUC result" />
             </div>
           )}
 
