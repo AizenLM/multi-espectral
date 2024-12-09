@@ -104,7 +104,7 @@ function LandCover() {
     <>
       <Layout>
         <div className="land-cover-container content">
-          <h2>Land Cover Classification</h2>
+          <h2>Clasificación de la cobertura terrestre</h2>
 
           {/* Image upload section */}
           <div className="upload-section">
